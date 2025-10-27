@@ -18,7 +18,7 @@ int main_menu();
 int main_menu(){
     int choice = 0;
     while (choice != 1 && choice != 2 && choice != 3 && choice != 4){
-        cout << "--- Goat Manager 3001 ---" << endl;
+        cout << "\n--- Goat Manager 3001 ---" << endl;
         cout << "[1] Add a goat" << endl;
         cout << "[2] Delete a goat" << endl;
         cout << "[3] List goats" << endl;
@@ -49,25 +49,27 @@ void delete_goat(list<Goat> &trip){
     display_trip(trip);
     cout << "Select which goat to delete: ";
     cin >> itNum;
-    for (int i; i < itNum; i++){
+    for (int i = 1; i < itNum; i++){
         it++;
     }
     trip.erase(it);
+    cout << "Goat deleted" << endl;
 }
 
 // list all goats
 void display_trip(list<Goat> trip){
     cout << "Listing all goats..." << endl;
-    for (int i = 0; i < trip.size(); i++){
-        for (Goat g : trip){
-            cout << "[" << i + 1 << "] - " << g.get_name() << " (" << g.get_age() << ", " << g.get_color() << ")" << endl;
-        }
+    int i = 0;
+    for (Goat g : trip){
+        cout << "[" << i + 1 << "] - " << g.get_name() << " (" << g.get_age() << ", " << g.get_color() << ")" << endl;
+        i++;
     }
 }
 
 int main() {
     srand(time(0));
     bool again;
+    list<Goat> trip;
 
     // read & populate arrays for names and colors
     ifstream fin("names.txt");
@@ -81,20 +83,20 @@ int main() {
     while (fin1 >> colors[i++]);
     fin1.close();
 
-    list<Goat> trip;
     int c = main_menu();
-    if (c == 1){
-        add_goat(trip, names, colors);
+    while (c != 4){
+        if (c == 1){
+            add_goat(trip, names, colors);
+        }
+        else if (c == 2){
+            delete_goat(trip);
+        }
+        else if (c == 3){
+            display_trip(trip);
+        }
+        c = main_menu();
     }
-    else if (c == 2){
-        delete_goat(trip);
-    }
-    else if (c == 3){
-        display_trip(trip);
-    }
-    else if (c == 4){
-        cout << "Quitting program..." << endl;
-    }
+    cout << "Quitting Goat Manager 3001..." << endl;
 
     return 0;
 }
