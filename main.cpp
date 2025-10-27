@@ -44,6 +44,20 @@ void add_goat(list<Goat> &trip, string names[], string colors[]){
 
 // deleting a goat
 void delete_goat(list<Goat> &trip){
+    int itNum = 0;
+    auto it = trip.begin();
+    display_trip(trip);
+    cout << "Select which goat to delete: ";
+    cin >> itNum;
+    for (int i; i < itNum; i++){
+        it++;
+    }
+    trip.erase(it);
+}
+
+// list all goats
+void display_trip(list<Goat> trip){
+    cout << "Listing all goats..." << endl;
     for (int i = 0; i < trip.size(); i++){
         for (Goat g : trip){
             cout << "[" << i + 1 << "] - " << g.get_name() << " (" << g.get_age() << ", " << g.get_color() << ")" << endl;
@@ -67,7 +81,20 @@ int main() {
     while (fin1 >> colors[i++]);
     fin1.close();
 
-    int test = main_menu();
+    list<Goat> trip;
+    int c = main_menu();
+    if (c == 1){
+        add_goat(trip, names, colors);
+    }
+    else if (c == 2){
+        delete_goat(trip);
+    }
+    else if (c == 3){
+        display_trip(trip);
+    }
+    else if (c == 4){
+        cout << "Quitting program..." << endl;
+    }
 
     return 0;
 }
