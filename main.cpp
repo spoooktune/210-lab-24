@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <iomanip>
-#include <list>
+// #include <list>
 #include <set>
 #include <cstdlib>
 #include "Goat.h"
@@ -9,10 +9,10 @@ using namespace std;
 
 const int SZ_NAMES = 200, SZ_COLORS = 25, MAX_AGE = 20;
 
-int select_goat(list<Goat> trip);
-void delete_goat(list<Goat> &trip);
-void add_goat(list<Goat> &trip, string [], string []);
-void display_trip(list<Goat> trip);
+int select_goat(set<Goat> trip);
+void delete_goat(set<Goat> &trip);
+void add_goat(set<Goat> &trip, string [], string []);
+void display_trip(set<Goat> trip);
 int main_menu();
 
 // main menu to select what to do with goats
@@ -34,17 +34,17 @@ int main_menu(){
 }
 
 // adding a goat
-void add_goat(list<Goat> &trip, string names[], string colors[]){
+void add_goat(set<Goat> &trip, string names[], string colors[]){
     string n = names[rand() % SZ_NAMES];
     int a = rand() % MAX_AGE;
     string c = colors[rand() % SZ_COLORS];
     Goat tempGoat = Goat(n, a, c);
-    trip.push_back(tempGoat);
+    trip.insert(tempGoat);
     cout << n << " added to the trip" << endl;
 }
 
 // deleting a goat
-void delete_goat(list<Goat> &trip){
+void delete_goat(set<Goat> &trip){
     int itNum = 0;
     auto it = trip.begin();
     display_trip(trip);
@@ -53,12 +53,12 @@ void delete_goat(list<Goat> &trip){
     for (int i = 1; i < itNum; i++){
         it++;
     }
-    trip.erase(it);
+    trip.erase(it); // remains same since erase for set also uses iterators
     cout << "Goat deleted" << endl;
 }
 
 // list all goats
-void display_trip(list<Goat> trip){
+void display_trip(set<Goat> trip){
     cout << "Listing all goats..." << endl;
     int i = 0;
     for (Goat g : trip){
@@ -70,7 +70,7 @@ void display_trip(list<Goat> trip){
 int main() {
     srand(time(0));
     bool again;
-    list<Goat> trip;
+    set<Goat> trip;
 
     // read & populate arrays for names and colors
     ifstream fin("names.txt");
