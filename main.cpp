@@ -2,6 +2,7 @@
 #include <fstream>
 #include <iomanip>
 #include <list>
+#include <cstdlib>
 #include "Goat.h"
 using namespace std;
 
@@ -13,6 +14,7 @@ void add_goat(list<Goat> &trip, string [], string []);
 void display_trip(list<Goat> trip);
 int main_menu();
 
+// main menu to select what to do with goats
 int main_menu(){
     int choice = 0;
     while (choice != 1 && choice != 2 && choice != 3 && choice != 4){
@@ -28,6 +30,25 @@ int main_menu(){
         }
     }
     return choice;
+}
+
+// adding a goat
+void add_goat(list<Goat> &trip, string names[], string colors[]){
+    string n = names[rand() % SZ_NAMES];
+    int a = rand() % MAX_AGE;
+    string c = colors[rand() % SZ_COLORS];
+    Goat tempGoat = Goat(n, a, c);
+    trip.push_back(tempGoat);
+    cout << n << " added to the trip" << endl;
+}
+
+// deleting a goat
+void delete_goat(list<Goat> &trip){
+    for (int i = 0; i < trip.size(); i++){
+        for (Goat g : trip){
+            cout << "[" << i + 1 << "] - " << g.get_name() << " (" << g.get_age() << ", " << g.get_color() << ")" << endl;
+        }
+    }
 }
 
 int main() {
