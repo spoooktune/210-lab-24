@@ -2,6 +2,7 @@
 #include <fstream>
 #include <iomanip>
 #include <list>
+#include <set>
 #include <cstdlib>
 #include "Goat.h"
 using namespace std;
